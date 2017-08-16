@@ -1,1 +1,1 @@
-# micro-service-hotel-pricing
+# micro-service-hotel-app.pricing
