@@ -3,7 +3,7 @@
 This module gives the price details for the other services and for the planned native application.
 
 ## Database:  
-Table prices
+Table **prices**
 
 Name | Type 
 ------------ | -------------
