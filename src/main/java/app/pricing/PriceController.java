@@ -1,5 +1,6 @@
 package app.pricing;
 
+import app.handlers.ResponseBuilder;
 import app.models.Hotel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import app.handlers.ErrorHandler;
@@ -28,9 +29,7 @@ import java.util.List;
 public class PriceController {
 
     private RestTemplate restTemplate = new RestTemplate();
-    private JSONObject jsonObject = new JSONObject();
-    private JSONArray hotelsJSON = new JSONArray();
-    private JSONArray pricesJSON = new JSONArray();
+    private ResponseBuilder builder = new ResponseBuilder();
 
     @Autowired
     PriceDAO priceDAO;
@@ -45,12 +44,11 @@ public class PriceController {
 
     @RequestMapping("/v1/hotels/price")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public ResponseEntity<?> pricesForAHotelByID(@RequestParam("id") int id) {
-
-        clearContent();
+    public ResponseEntity<?> roomPricesForAHotelByID(@RequestParam("id") int id) {
 
         ResponseEntity<Hotel> hotelResponse = restTemplate.exchange("http://localhost:2222/v1/hotel?id={id}", HttpMethod.GET, null, new ParameterizedTypeReference<Hotel>() {
         }, id);
+
         Hotel hotel = hotelResponse.getBody();
         List<Price> prices = priceDAO.findAllByhotelId(id);
 
@@ -58,24 +56,6 @@ public class PriceController {
             return new ResponseEntity<>(new ErrorHandler("No data was found for id: " + id), HttpStatus.NOT_FOUND);
         }
 
-        hotelsJSON.add(prices);
-
-        HashMap<Object, Object> hotelDetails = new HashMap<>();
-        hotelDetails.put("hotelName", hotel.getHotelName());
-        hotelDetails.put("country", hotel.getCountry());
-        hotelDetails.put("city", hotel.getCity());
-        hotelDetails.put("address", hotel.getAddress());
-
-        jsonObject.put("result", "OK");
-        jsonObject.put("hotelDetails", hotelDetails);
-        jsonObject.put("pricing", prices);
-
-        return new ResponseEntity<>(jsonObject, HttpStatus.OK);
-    }
-
-    private void clearContent() {
-        hotelsJSON.clear();
-        pricesJSON.clear();
-        jsonObject.clear();
+        return new ResponseEntity<>(builder.buildResponse(hotel, prices), HttpStatus.OK);
     }
 }
