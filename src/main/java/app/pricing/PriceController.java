@@ -46,7 +46,7 @@ public class PriceController {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public ResponseEntity<?> roomPricesForAHotelByID(@Validated @RequestParam(value = "id", required = true) int id) {
 
-        ResponseEntity<Hotel> hotelResponse = restTemplate.exchange("http://localhost:2222/v1/hotel?id={id}", HttpMethod.GET, null, new ParameterizedTypeReference<Hotel>() {
+        ResponseEntity<Hotel> hotelResponse = restTemplate.exchange("http://localhost:2221/v1/hotels/hotel?id={id}", HttpMethod.GET, null, new ParameterizedTypeReference<Hotel>() {
         }, id);
 
         Hotel hotel = hotelResponse.getBody();
