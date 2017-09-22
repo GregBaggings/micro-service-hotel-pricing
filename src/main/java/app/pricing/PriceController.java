@@ -33,7 +33,7 @@ public class PriceController {
         return new ResponseEntity<>(prices, HttpStatus.OK);
     }
 
-    @RequestMapping("/v1/hotels/price")
+    @RequestMapping("/v1/hotels/prices/price")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public ResponseEntity<?> roomPricesForAHotelByID(@Validated @RequestParam(value = "id", required = true) int id) {
         List<Price> prices = priceDAO.findAllByhotelId(id);
