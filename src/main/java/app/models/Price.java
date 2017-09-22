@@ -15,8 +15,6 @@ public class Price {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "roomid", nullable = false)
     private int roomId;
-    @Column(name = "roomname", nullable = false)
-    private String roomName;
     @Column(name = "price", nullable = false)
     private int price;
 
@@ -34,14 +32,6 @@ public class Price {
 
     public void setRoomId(int roomId) {
         this.roomId = roomId;
-    }
-
-    public String getRoomName() {
-        return roomName;
-    }
-
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
     }
 
     public int getPrice() {
