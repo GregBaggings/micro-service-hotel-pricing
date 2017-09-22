@@ -14,7 +14,7 @@ price | int NOT NULL
 
 ### Endpoints:  
 
-#### List Prices all prices
+#### List all prices
 
 ***Endpoint:*** {host}/v1/hotels/prices
 
